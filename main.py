@@ -15,7 +15,7 @@ screen.clean_screen()
 screen.set_screen_bg_color(0x252525)
 
 # Variabelen
-huidigVerbruik = 199
+huidigVerbruik = 450
 highWatt = 200
 weatherStad = "Deventer"
 weatherKwh = 220
@@ -85,11 +85,11 @@ def pressed_btn():
     try:
         if lampState:
             lampState = False
-            req = urequests.request(method='GET', url="https://app.apilio.com/webhooks/v2/logicblocks/8884b255-7fd1-4abc-afae-9b9762b7767c/evaluate?key=3dde524ed29c6358f8f296239ffb4cd1ee212fa31bf24a62836d62b8a00411eb4c9dc6bd4bed9c0218d37de6478a6ae3afb0ba0029f4916d69a133f106667aef", headers={})
+            req = urequests.request(method='GET', url="https://app.apilio.com/webhooks/v2/logicblocks/c02faf2e-e3a5-47d1-bad8-1ea510b5e4b6/evaluate?key=28799b2bda8547440d78c37764a1d64325f14886cde1f6b562ea3a05cc4bcaa019b4d54f1012fde4752e38d44754583f17a2ccd0cf0a334cfef66f155afa5879", headers={})
             req.close()
         else:
             lampState = True
-            req = urequests.request(method='GET', url="https://app.apilio.com/webhooks/v2/logicblocks/229b92b4-e26e-4c93-a738-84b9d30646e7/evaluate?key=1ac4bf2035c93978d39fe1fd66822c57666e2cdd4c041b77cdcbce362af4ff541bba8b81253626d248eefc79d8def8db2d77c737e0969ac11662bac8344ee9cb", headers={})
+            req = urequests.request(method='GET', url="https://app.apilio.com/webhooks/v2/logicblocks/e381fd5d-a240-4e1a-94f4-484975a5f373/evaluate?key=8d60951b35bf1432604be0461819036d9d154f456db95e263cbd1959c1bbbf67b5ace36114e262a2f81acb7b42d84604aa1727d7e090048ebb905e121b81583e", headers={})
             req.close()
     except Exception as e:
         lcd.print("ERROR: " + str(e), 0, 0, 0x000000)
@@ -101,7 +101,7 @@ def showDevices():
     Label = M5Label("Apparaatbeheer", 10, 5, 0xffffff, FONT_MONT_22)
     
     apparaatBox = M5Line(110, 100, 15, 100, 0xffffff, 120)
-    lampImg = M5Img("res/lamp.png", x=35, y=54, parent=None)
+    lampImg = M5Img("res/spots.png", x=35, y=54, parent=None)
     lamp_aan_uit = M5Btn(text='Switch', x=30, y=125, w=70, h=30, bg_c=0xFFFFFF, text_c=0x000000, font=FONT_MONT_14, parent=None)
     
     lamp_aan_uit.pressed(pressed_btn)
@@ -119,6 +119,15 @@ def showSettings():
     power.setVibrationEnable(False)
     
     Label = M5Label("Instellingen", 10, 5, 0xffffff, FONT_MONT_22)
+    settingBox = M5Line(305, 130, 15, 130, 0xffffff, 180)
+    
+    Volume = M5Label("Volume                                   >", 30, 55, 0x000000, FONT_MONT_18)
+    Geluiden = M5Label("Geluiden                                 >", 30, 95, 0x000000, FONT_MONT_18)
+    Helderheid = M5Label("Helderheid                             >", 30, 135, 0x000000, FONT_MONT_18)
+    Themakleuren = M5Label("Themakleuren                       >", 30, 175, 0x000000, FONT_MONT_18)
+
+
+
 
 btnB.pressFor(0.8, showSettings)
 
