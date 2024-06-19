@@ -19,6 +19,7 @@ huidigVerbruik = 450
 highWatt = 200
 weatherStad = "Deventer"
 weatherKwh = 220
+screenBrightness = 100
 
 lampAan = True
 API_Key = "561bfde85c3849289b7102745242504"
@@ -108,6 +109,32 @@ def showDevices():
 
 btnC.wasPressed(showDevices)
 
+def increaseBrightness():
+    global screenBrightness
+    if screenBrightness < 100:
+        screenBrightness += 10
+        screen.set_screen_brightness(screenBrightness)
+
+def decreaseBrightness():
+    global screenBrightness
+    if screenBrightness > 20:  # Ensuring the brightness does not go below 0
+        screenBrightness -= 10
+        screen.set_screen_brightness(screenBrightness)
+
+def helderheidSetting():
+    screen.clean_screen()
+    screen.set_screen_bg_color(0x252525)
+    
+    label = M5Label("Helderheid", 10, 5, 0xffffff, FONT_MONT_22)
+    minButton = M5Btn(text='-', x=25, y=100, w=50, h=50, bg_c=0xFFFFFF, text_c=0x000000, font=FONT_MONT_22, parent=None)
+    plusButton = M5Btn(text='+', x=240, y=100, w=50, h=50, bg_c=0xFFFFFF, text_c=0x000000, font=FONT_MONT_22, parent=None)
+
+    icon = M5Img("res/brightness.png", x=130, y=100, parent=None)
+
+    minButton.pressed(decreaseBrightness)
+    plusButton.pressed(increaseBrightness)
+
+    
 # Laat de instellingen zien
 def showSettings():
     screen.clean_screen()
@@ -119,15 +146,18 @@ def showSettings():
     power.setVibrationEnable(False)
     
     Label = M5Label("Instellingen", 10, 5, 0xffffff, FONT_MONT_22)
-    settingBox = M5Line(305, 130, 15, 130, 0xffffff, 180)
     
-    Volume = M5Label("Volume                                   >", 30, 55, 0x000000, FONT_MONT_18)
-    Geluiden = M5Label("Geluiden                                 >", 30, 95, 0x000000, FONT_MONT_18)
-    Helderheid = M5Label("Helderheid                             >", 30, 135, 0x000000, FONT_MONT_18)
-    Themakleuren = M5Label("Themakleuren                       >", 30, 175, 0x000000, FONT_MONT_18)
+    # Buttons
+    HelderheidKnop = M5Btn(text='', x=25, y=130, w=250, h=35, bg_c=0xFFFFFF, text_c=0x000000, font=FONT_MONT_14, parent=None)
+    HelderheidKnop.pressed(helderheidSetting)
 
+    settingBox = M5Line(305, 130, 15, 130, 0xffffff, 180)
 
-
+    # Button Views
+    Volume = M5Img("res/volume.png", x=25, y=54, parent=None)
+    Geluiden = M5Img("res/geluiden.png", x=25, y=94, parent=None)
+    Helderheid = M5Img("res/helderheid.png", x=25, y=134, parent=None)
+    Themakleuren = M5Img("res/themakleuren.png", x=25, y=174, parent=None)
 
 btnB.pressFor(0.8, showSettings)
 
